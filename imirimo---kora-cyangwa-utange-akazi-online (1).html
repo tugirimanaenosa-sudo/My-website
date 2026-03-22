@@ -1,0 +1,3407 @@
+<html lang="rw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMIRIMO - Kora cyangwa Utange Akazi Online</title>
+    <link rel="icon" href="&#x1F4BB;" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #212529; /* Darker charcoal */
+            --secondary-color: #343a40; /* Slightly lighter charcoal */
+            --accent-color: #007bff; /* Vibrant blue */
+            --text-color: #f8f9fa; /* Light grey for text */
+            --light-text-color: #ced4da; /* Lighter grey for secondary text */
+            --border-color: #495057; /* Greyish border */
+            --hover-color: #0056b3; /* Darker blue on hover */
+            --error-color: #dc3545; /* Red for errors */
+            --success-color: #28a745; /* Green for success */
+            --card-bg: #2b2f34; /* Slightly lighter charcoal for cards */
+            --gradient-start: #343a40; /* Start gradient with secondary color */
+            --gradient-end: #0b0c0d; /* Dark end for gradient */
+            --gradient-mid: #212529; /* Mid for gradient */
+            --toast-bg: rgba(40, 44, 50, 0.9); /* Dark semi-transparent for toast */
+            --toast-border: rgba(60, 65, 70, 0.9); /* Dark border for toast */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif; /* Changed to Open Sans */
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+            background-size: 400% 400%;
+            animation: gradientAnim 15s ease infinite;
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        @keyframes gradientAnim {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px; /* 8px grid baseline from design */
+            flex-grow: 1;
+        }
+
+        /* Utility classes */
+        .flex { display: flex; }
+        .justify-center { justify-content: center; }
+        .align-center { align-items: center; }
+        .flex-col { flex-direction: column; }
+        .gap-16 { gap: 16px; } /* 8px grid baseline */
+        .gap-24 { gap: 24px; }
+        .gap-32 { gap: 32px; }
+        .p-16 { padding: 16px; }
+        .pt-64 { padding-top: 64px; }
+        .mt-32 { margin-top: 32px; }
+        .mb-32 { margin-bottom: 32px; }
+        .text-center { text-align: center; }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif; /* Changed to Montserrat */
+            color: var(--text-color);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+        h1 { font-size: clamp(2.5rem, 6vw, 4rem); }
+        h2 { font-size: clamp(2rem, 5vw, 3rem); }
+        h3 { font-size: clamp(1.5rem, 4vw, 2rem); }
+        p {
+            font-size: 1rem;
+            margin-bottom: 16px;
+            color: var(--light-text-color);
+        }
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: var(--hover-color);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background-color: var(--hover-color);
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+        }
+        .btn-secondary:hover {
+            background-color: rgba(0, 123, 255, 0.1);
+            color: var(--hover-color);
+            border-color: var(--hover-color);
+        }
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+        .btn-outline:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--hover-color);
+            color: var(--hover-color);
+        }
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+        .btn-icon {
+            gap: 8px;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--light-text-color);
+            font-size: 0.9rem;
+        }
+        .form-group input:not([type="checkbox"]),
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-group input:not([type="checkbox"]):focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
+        }
+        .form-group .error-message {
+            color: var(--error-color);
+            font-size: 0.85rem;
+            margin-top: 4px;
+            display: none;
+        }
+        .form-group.has-error input,
+        .form-group.has-error select,
+        .form-group.has-error textarea {
+            border-color: var(--error-color);
+        }
+        .form-group.has-error .error-message {
+            display: block;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            appearance: none;
+            background-color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            flex-shrink: 0;
+            transition: all 0.2s ease-in-out;
+        }
+        .checkbox-group input[type="checkbox"]:checked {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        .checkbox-group input[type="checkbox"]:checked::before {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 12px;
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        .checkbox-group label {
+            margin-bottom: 0;
+            color: var(--text-color);
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .radio-group {
+            margin-bottom: 24px;
+        }
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+        .radio-group input[type="radio"] {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            position: relative;
+            flex-shrink: 0;
+            transition: all 0.2s ease-in-out;
+        }
+        .radio-group input[type="radio"]:checked {
+            border-color: var(--accent-color);
+        }
+        .radio-group input[type="radio"]:checked::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 16px;
+        }
+        .card h3 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 1.3rem;
+        }
+        .card p {
+            font-size: 0.95rem;
+            color: var(--light-text-color);
+        }
+
+        /* Navigation */
+        .header {
+            background-color: var(--primary-color);
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo i {
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+        .nav-links a {
+            color: var(--light-text-color);
+            font-weight: 500;
+            position: relative;
+            padding: 8px 0;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+            position: relative;
+            z-index: 1001;
+            width: 30px;
+        }
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background-color: var(--text-color);
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-color);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            transform: translateX(100%);
+            transition: transform 0.4s ease-out;
+            z-index: 999;
+        }
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+        .mobile-nav a {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            font-weight: 500;
+            padding: 10px 0;
+        }
+        .mobile-nav .auth-buttons {
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            padding: 64px 0;
+        }
+        .hero-content {
+            z-index: 2;
+            max-width: 800px;
+        }
+        .hero h1 {
+            color: #fff;
+            font-size: clamp(3rem, 8vw, 5rem);
+            line-height: 1.2;
+            margin-bottom: 24px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+        .hero p {
+            color: var(--light-text-color);
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero .btn {
+            font-size: 1.1rem;
+            padding: 14px 32px;
+        }
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 60vh;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero p {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Features Section */
+        .section-title {
+            text-align: center;
+            margin-bottom: 48px;
+            color: var(--text-color);
+        }
+        .section-title h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 16px;
+        }
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--light-text-color);
+        }
+
+        /* Testimonials */
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .testimonial-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+        .testimonial-card i.fa-quote-left {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 3rem;
+            color: rgba(0, 123, 255, 0.1);
+            opacity: 0.6;
+        }
+        .testimonial-card p {
+            font-style: italic;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+            color: var(--text-color);
+            position: relative;
+            z-index: 1;
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-color);
+        }
+        .testimonial-author-info strong {
+            display: block;
+            color: var(--text-color);
+            font-weight: 600;
+        }
+        .testimonial-author-info span {
+            color: var(--light-text-color);
+            font-size: 0.85rem;
+        }
+
+        /* Pricing */
+        .pricing-toggle {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 48px;
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            padding: 8px;
+            gap: 8px;
+        }
+        .pricing-toggle button {
+            flex: 1;
+            padding: 12px 24px;
+            border: none;
+            background-color: transparent;
+            color: var(--light-text-color);
+            font-weight: 500;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .pricing-toggle button.active {
+            background-color: var(--accent-color);
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            align-items: stretch;
+        }
+        .pricing-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .pricing-card.popular {
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 25px rgba(0, 123, 255, 0.5);
+            transform: translateY(-8px);
+        }
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        }
+        .pricing-card h3 {
+            color: var(--text-color);
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+        .pricing-card .price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 16px;
+        }
+        .pricing-card .price span {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--light-text-color);
+        }
+        .pricing-card ul {
+            list-style: none;
+            margin-bottom: 32px;
+            flex-grow: 1;
+        }
+        .pricing-card ul li {
+            margin-bottom: 12px;
+            color: var(--light-text-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+        .pricing-card ul li i {
+            color: var(--accent-color);
+        }
+        .pricing-card .btn {
+            margin-top: auto;
+            width: 100%;
+        }
+
+        /* Contact Form */
+        .contact-section {
+            padding: 64px 0;
+        }
+        .contact-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 48px;
+            justify-content: center;
+        }
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+        }
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 24px;
+        }
+        .contact-info p {
+            margin-bottom: 16px;
+            color: var(--light-text-color);
+        }
+        .contact-info ul {
+            list-style: none;
+            margin-top: 24px;
+        }
+        .contact-info ul li {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 16px;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        .contact-info ul li i {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            width: 24px; /* Ensure icon has fixed width */
+        }
+        .contact-form {
+            flex: 2;
+            min-width: 300px;
+            max-width: 600px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+        }
+        .contact-form h3 {
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--primary-color);
+            padding: 48px 0 24px;
+            border-top: 1px solid var(--border-color);
+            color: var(--light-text-color);
+            margin-top: 64px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+        .footer-col h4 {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            margin-bottom: 24px;
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+        .footer-col ul li a {
+            color: var(--light-text-color);
+            font-size: 0.95rem;
+        }
+        .footer-col ul li a:hover {
+            color: var(--accent-color);
+        }
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .footer-logo i {
+            color: var(--accent-color);
+        }
+        .footer-info p {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        .social-links {
+            display: flex;
+            gap: 16px;
+            margin-top: 24px;
+        }
+        .social-links a {
+            color: var(--light-text-color);
+            font-size: 1.4rem;
+            transition: color 0.3s ease;
+        }
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            color: var(--light-text-color);
+        }
+
+        /* Specific Page Styles */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 120px); /* Adjust based on header/footer height */
+            padding: 32px 0;
+        }
+        .auth-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-color);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+        }
+        .auth-card h2 {
+            margin-bottom: 32px;
+            font-size: 2rem;
+            color: var(--text-color);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dashboard */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 24px;
+            padding-top: 32px; /* For fixed header */
+        }
+        .sidebar {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px 0;
+            height: fit-content;
+            border: 1px solid var(--border-color);
+        }
+        .sidebar-header {
+            padding: 0 24px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .sidebar-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-color);
+        }
+        .sidebar-header h4 {
+            margin: 0;
+            color: var(--text-color);
+        }
+        .sidebar-nav ul {
+            list-style: none;
+        }
+        .sidebar-nav ul li a {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 24px;
+            color: var(--light-text-color);
+            font-weight: 500;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .sidebar-nav ul li a i {
+            font-size: 1.2rem;
+        }
+        .sidebar-nav ul li a:hover {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+        .sidebar-nav ul li a.active {
+            background-color: rgba(0, 123, 255, 0.15);
+            color: var(--accent-color);
+            border-left-color: var(--accent-color);
+        }
+        .main-content {
+            flex-grow: 1;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        .dashboard-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .dashboard-card h3 {
+            font-size: 1.1rem;
+            color: var(--light-text-color);
+            margin-bottom: 8px;
+        }
+        .dashboard-card .value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+        }
+        .dashboard-card p {
+            font-size: 0.9rem;
+            color: var(--light-text-color);
+            margin-bottom: 0;
+        }
+        .tasks-section .header, .deposit-section .header, .withdraw-section .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .tasks-section .header h2, .deposit-section .header h2, .withdraw-section .header h2 {
+            margin-bottom: 0;
+        }
+        .task-card-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        .task-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .task-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        .task-card h4 {
+            color: var(--text-color);
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+        .task-card .task-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+            color: var(--light-text-color);
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .task-card .task-meta span i {
+            margin-right: 5px;
+            color: var(--accent-color);
+        }
+        .task-card .task-description {
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+        }
+        .task-card .progress-bar {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            height: 10px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+        .task-card .progress-bar-fill {
+            height: 100%;
+            background-color: var(--accent-color);
+            border-radius: 8px;
+            width: 0%; /* JS controlled */
+            transition: width 0.5s ease-out;
+        }
+        .task-card .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .task-instructions-page .task-header {
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .task-instructions-page .task-details {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 32px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 32px;
+        }
+        .task-instructions-page .task-details h3 {
+            color: var(--accent-color);
+            margin-bottom: 16px;
+        }
+        .task-instructions-page .task-details p {
+            margin-bottom: 12px;
+            color: var(--light-text-color);
+        }
+        .task-instructions-page .task-details a {
+            word-break: break-all;
+        }
+        .task-instructions-page .proof-upload-section {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 32px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .task-instructions-page .proof-upload-section h3 {
+            margin-bottom: 24px;
+        }
+        .file-upload-box {
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+            margin-bottom: 24px;
+        }
+        .file-upload-box:hover {
+            border-color: var(--accent-color);
+        }
+        .file-upload-box i {
+            font-size: 3rem;
+            color: var(--light-text-color);
+            margin-bottom: 16px;
+        }
+        .file-upload-box p {
+            margin-bottom: 0;
+            color: var(--light-text-color);
+        }
+        .uploaded-file-preview {
+            margin-top: 16px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Post Task */
+        .post-task-form .grid-2-cols {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .post-task-form .form-section-title {
+            margin-top: 32px;
+            margin-bottom: 24px;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+        }
+        .post-task-form .image-upload-preview {
+            max-width: 150px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-top: 16px;
+        }
+        .post-task-form .worker-count-selection {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .post-task-form .worker-count-selection label {
+            background-color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            text-align: center;
+            color: var(--light-text-color);
+            font-weight: 500;
+        }
+        .post-task-form .worker-count-selection input[type="radio"] {
+            display: none;
+        }
+        .post-task-form .worker-count-selection input[type="radio"]:checked + label {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        }
+
+        /* Deposit/Withdraw */
+        .payment-info-box {
+            background-color: var(--secondary-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-color);
+        }
+        .payment-info-box h4 {
+            margin-bottom: 12px;
+            color: var(--text-color);
+            font-size: 1.2rem;
+        }
+        .payment-info-box p {
+            margin-bottom: 8px;
+            color: var(--light-text-color);
+        }
+        .payment-info-box strong {
+            color: var(--text-color);
+        }
+        .ussd-code {
+            background-color: var(--primary-color);
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            white-space: pre-wrap;
+            word-break: break-all;
+            margin-top: 16px;
+            border: 1px dashed var(--border-color);
+        }
+        .withdraw-rules {
+            background-color: var(--secondary-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 24px;
+            border: 1px solid var(--border-color);
+        }
+        .withdraw-rules h4 {
+            margin-bottom: 12px;
+            color: var(--text-color);
+        }
+        .withdraw-rules ul {
+            list-style: disc;
+            margin-left: 20px;
+            color: var(--light-text-color);
+        }
+        .withdraw-rules ul li {
+            margin-bottom: 8px;
+        }
+
+        /* Notifications */
+        .notification-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .notification-item {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px 24px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .notification-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .notification-item.unread {
+            border-left: 5px solid var(--accent-color);
+        }
+        .notification-item i {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            flex-shrink: 0;
+        }
+        .notification-item.unread i {
+            color: var(--hover-color);
+        }
+        .notification-content p {
+            margin-bottom: 4px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        .notification-content small {
+            color: var(--light-text-color);
+            font-size: 0.85rem;
+        }
+
+        /* Admin Panel */
+        .admin-panel .dashboard-grid {
+            margin-top: 32px;
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 32px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        .admin-table th, .admin-table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--light-text-color);
+        }
+        .admin-table thead th {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+        .admin-table tbody tr:hover {
+            background-color: var(--secondary-color);
+        }
+        .admin-table .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .status-badge.pending { background-color: rgba(255, 159, 64, 0.2); color: #ffbf00; }
+        .status-badge.approved { background-color: rgba(40, 167, 69, 0.2); color: var(--success-color); }
+        .status-badge.rejected { background-color: rgba(220, 53, 69, 0.2); color: var(--error-color); }
+        .status-badge.active { background-color: rgba(0, 123, 255, 0.2); color: var(--accent-color); }
+        .admin-actions .btn {
+            padding: 8px 12px;
+            margin-right: 8px;
+            font-size: 0.85rem;
+        }
+        .admin-actions .btn:last-child {
+            margin-right: 0;
+        }
+        .admin-search-filter {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        .admin-search-filter input[type="text"],
+        .admin-search-filter select {
+            flex: 1;
+            min-width: 180px;
+            background-color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 350px;
+        }
+        .toast {
+            background-color: var(--toast-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--toast-border);
+            border-radius: 8px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            color: var(--text-color);
+            opacity: 0;
+            transform: translateX(100%);
+            animation: slideIn 0.5s forwards, fadeOut 0.5s 4.5s forwards;
+        }
+        .toast.success { border-left: 5px solid var(--success-color); }
+        .toast.error { border-left: 5px solid var(--error-color); }
+        .toast.info { border-left: 5px solid var(--accent-color); }
+        .toast i {
+            font-size: 1.4rem;
+            color: var(--accent-color); /* Default, overridden by type if specified */
+        }
+        .toast.success i { color: var(--success-color); }
+        .toast.error i { color: var(--error-color); }
+        .toast.info i { color: var(--accent-color); }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(100%); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(100%); }
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .loading-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .spinner {
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid var(--accent-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                border-radius: 0;
+                padding-bottom: 0;
+            }
+            .sidebar-header {
+                padding-left: 0;
+                justify-content: center;
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+            .sidebar-header h4 {
+                display: none; /* Hide name on small screens */
+            }
+            .sidebar-nav ul {
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 8px;
+                background-color: var(--card-bg);
+                border-bottom: 1px solid var(--border-color);
+            }
+            .sidebar-nav ul::-webkit-scrollbar {
+                height: 4px;
+            }
+            .sidebar-nav ul::-webkit-scrollbar-thumb {
+                background: var(--accent-color);
+                border-radius: 5px;
+            }
+            .sidebar-nav ul::-webkit-scrollbar-track {
+                background: var(--border-color);
+            }
+
+            .sidebar-nav ul li {
+                flex-shrink: 0;
+                scroll-snap-align: start;
+            }
+            .sidebar-nav ul li a {
+                padding: 12px 18px;
+                white-space: nowrap;
+                border-left: none;
+                border-bottom: 4px solid transparent;
+            }
+            .sidebar-nav ul li a.active {
+                border-bottom-color: var(--accent-color);
+                border-left-color: transparent;
+            }
+            .main-content {
+                padding-top: 24px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar .nav-links,
+            .navbar .auth-buttons {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .footer-logo, .footer-col h4 {
+                justify-content: center;
+            }
+            .social-links {
+                justify-content: center;
+            }
+            .auth-card {
+                padding: 24px;
+                margin: 0 16px;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero p {
+                font-size: 0.95rem;
+            }
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            .pricing-card .price {
+                font-size: 2.5rem;
+            }
+            .contact-info, .contact-form {
+                max-width: 100%;
+                width: 100%;
+            }
+            .contact-form {
+                padding: 24px;
+            }
+            .contact-info ul li {
+                align-items: center; /* Adjust for better alignment on small screens */
+                justify-content: center;
+            }
+            .contact-info ul li div {
+                text-align: left;
+            }
+             .tasks-section .header {
+                flex-direction: column;
+                align-items: center;
+            }
+            .tasks-section .header .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero .btn {
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+            .auth-card h2 {
+                font-size: 1.5rem;
+            }
+            .dashboard-card .value {
+                font-size: 2rem;
+            }
+            .toast {
+                max-width: 90%;
+            }
+             .sidebar-header {
+                padding-right: 0;
+            }
+        }
+
+        /* Smooth scroll for anchor links */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Intersection Observer for animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-on-scroll.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* File input styling */
+        input[type="file"] {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 8px;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            font-family: 'Open Sans', sans-serif;
+            cursor: pointer;
+        }
+        input[type="file"]::-webkit-file-upload-button {
+            background-color: var(--accent-color);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+        input[type="file"]::-webkit-file-upload-button:hover {
+            background-color: var(--hover-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#home" class="logo"><i class="fas fa-briefcase"></i> IMIRIMO</a>
+                <div class="nav-links">
+                    <a href="#home" class="active">Ahabanza</a>
+                    <a href="#tasks">Imirimo</a>
+                    <a href="#about">Amakuru</a>
+                    <a href="#contact">Twandikire</a>
+                </div>
+                <div class="auth-buttons">
+                    <a href="#login" class="btn btn-outline">Injira</a>
+                    <a href="#signup" class="btn btn-primary">Hanga Konti</a>
+                </div>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="mobile-nav">
+        <a href="#home">Ahabanza</a>
+        <a href="#tasks">Imirimo</a>
+        <a href="#about">Amakuru</a>
+        <a href="#contact">Twandikire</a>
+        <div class="auth-buttons">
+            <a href="#login" class="btn btn-outline">Injira</a>
+            <a href="#signup" class="btn btn-primary">Hanga Konti</a>
+        </div>
+    </div>
+
+    <main class="container">
+        <div id="pages">
+            <!-- Home Page -->
+            <section id="home" class="page hero active">
+                <div class="hero-content animate-on-scroll">
+                    <h1>IMIRIMO: Injiza Amafaranga Cyangwa Ubone Abagukorera Imirimo</h1>
+                    <p>Shaka cyangwa utange imirimo mito ku murongo. Ubuzima bwawe n'akazi kawe biroroshye hamwe na IMIRIMO.</p>
+                    <div class="flex justify-center gap-16">
+                        <a href="#signup" class="btn btn-primary btn-icon"><i class="fas fa-hand-sparkles"></i> Tangira kwinjiza</a>
+                        <a href="#post-task" class="btn btn-secondary btn-icon"><i class="fas fa-plus"></i> Tanga Umurimo</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Signup Page -->
+            <section id="signup" class="page auth-container">
+                <div class="auth-card animate-on-scroll">
+                    <h2>Hanga Konti</h2>
+                    <form id="signup-form">
+                        <div class="form-group">
+                            <label for="signup-invited-by">Watumiwe na (bisanzwe):</label>
+                            <input type="text" id="signup-invited-by" placeholder="Uwakutumye (niba hariho)">
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-fullname">Andika amazina yawe yose:</label>
+                            <input type="text" id="signup-fullname" placeholder="Amazina yuzuye" required>
+                            <div class="error-message" id="error-fullname">Amazina y'ingenzi akenewe.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-password">Andika ijambo banga:</label>
+                            <input type="password" id="signup-password" placeholder="Ijambo banga ryawe" required>
+                            <div class="error-message" id="error-password">Ijambo banga rigomba kuba nibura inyuguti 6.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-confirm-password">Ongera usubiremo ijambo banga:</label>
+                            <input type="password" id="signup-confirm-password" placeholder="Subiramo ijambo banga" required>
+                            <div class="error-message" id="error-confirm-password">Amajambo abiri ntagomba kuba atandukanye.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-phone">Shyiramo nimero ya telephone wakiriraho amafaranga (urugero: 07xxxxxxx):</label>
+                            <input type="tel" id="signup-phone" placeholder="07XXXXXXXX" required pattern="^07[0-9]{8}$">
+                            <div class="error-message" id="error-phone">Nimero ya telephone ntikurikije amabwiriza (urugero: 07XXXXXXXX).</div>
+                        </div>
+                        <div class="form-group radio-group">
+                            <label>Hitamo icyo ushaka gukora:</label>
+                            <label>
+                                <input type="radio" name="signup-role" value="worker" checked>
+                                Gukora IMIRIMO
+                            </label>
+                            <label>
+                                <input type="radio" name="signup-role" value="employer">
+                                Gutanga IMIRIMO
+                            </label>
+                            <label>
+                                <input type="radio" name="signup-role" value="both">
+                                Gukora yose IMIRIMO n'akazi
+                            </label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="signup-agree-terms" required>
+                            <label for="signup-agree-terms">Emera <a href="#terms" target="_blank">amategeko n'amabwiriza</a></label>
+                            <div class="error-message" id="error-terms-agreement">Ukenewe kwemera amabwiriza.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-captcha">Utiye robot?</label>
+                            <input type="text" id="signup-captcha" placeholder="Andika ibiri mu ifoto" required>
+                            <div class="error-message" id="error-captcha">Komeza urihume neza.</div>
+                            <!-- Simple captcha, for real use, integrate reCAPTCHA -->
+                            <img src="https://via.placeholder.com/100x40?text=2HhL8" alt="Captcha" style="margin-top: 8px; border-radius: 4px;">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">KOMEZA</button>
+                    </form>
+                    <p class="mt-32">Ufite konti? <a href="#login">Injira hano</a></p>
+                </div>
+            </section>
+
+            <!-- Login Page -->
+            <section id="login" class="page auth-container">
+                <div class="auth-card animate-on-scroll">
+                    <h2>Injira</h2>
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="login-username">Amazina yawe cyangwa nimero ya telephone:</label>
+                            <input type="text" id="login-username" placeholder="Amazina Cyangwa Nimero" required>
+                            <div class="error-message" id="error-login-username">Ukenewe gutanga amazina cyangwa nimero.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Ijambo banga:</label>
+                            <input type="password" id="login-password" placeholder="Ijambo banga ryawe" required>
+                            <div class="error-message" id="error-login-password">Ijambo banga ntaryo.</div>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="login-remember-me">
+                            <label for="login-remember-me">Ntawibagirwe</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">KOMEZA</button>
+                    </form>
+                    <p class="mt-32">Ntufite konti? <a href="#signup">Hanga Konti</a></p>
+                    <p><a href="#forgot-password">Wibagiwe ijambo banga?</a></p>
+                </div>
+            </section>
+
+            <!-- User Dashboard -->
+            <section id="dashboard" class="page container pt-64">
+                <h2 class="section-title">Ikibonezamashusho cyawe (Dashboard)</h2>
+                <div class="dashboard-layout">
+                    <aside class="sidebar">
+                        <div class="sidebar-header">
+                            <img src="https://via.placeholder.com/50/007bff/ffffff?text=U" alt="Umwirondoro">
+                            <h4>Karahamuheto</h4>
+                        </div>
+                        <nav class="sidebar-nav">
+                            <ul>
+                                <li><a href="#dashboard" class="active"><i class="fas fa-home"></i> Ahabanza</a></li>
+                                <li><a href="#tasks"><i class="fas fa-clipboard-list"></i> Imirimo</a></li>
+                                <li><a href="#post-task"><i class="fas fa-plus-square"></i> Tanga Umurimo</a></li>
+                                <li><a href="#deposit"><i class="fas fa-wallet"></i> Bitsafananga</a></li>
+                                <li><a href="#withdraw"><i class="fas fa-money-check-alt"></i> Kuramofananga</a></li>
+                                <li><a href="#notifications"><i class="fas fa-bell"></i> Ibikubashukanye</a></li>
+                                <li><a href="#support"><i class="fas fa-headset"></i> Ubufasha</a></li>
+                                <li id="admin-panel-link" style="display: none;"><a href="#admin-panel"><i class="fas fa-user-shield"></i> Admin Panel</a></li>
+                                <li><a href="#" id="logout-button"><i class="fas fa-sign-out-alt"></i> Sohoka</a></li>
+                            </ul>
+                        </nav>
+                    </aside>
+                    <div class="main-content">
+                        <div class="dashboard-grid">
+                            <div class="dashboard-card animate-on-scroll">
+                                <h3>Umubare wa konti yanjye</h3>
+                                <div class="value">RF <span id="balance-display">0</span></div>
+                                <p>Amafaranga ufite ubu.</p>
+                            </div>
+                            <div class="dashboard-card animate-on-scroll">
+                                <h3>Imirimo ihari</h3>
+                                <div class="value" id="available-tasks-dashboard">73</div>
+                                <p>Imirimo ushobora gukora.</p>
+                            </div>
+                            <div class="dashboard-card animate-on-scroll">
+                                <h3>Amafaranga yinjije</h3>
+                                <div class="value">RF <span id="earned-display">0</span></div>
+                                <p>Amafaranga yose winjije.</p>
+                            </div>
+                            <div class="dashboard-card animate-on-scroll">
+                                <h3>Amafaranga ategereje kwishyurwa</h3>
+                                <div class="value">RF <span id="pending-display">0</span></div>
+                                <p>Amafaranga atarishyurwa.</p>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <h3 class="mt-32">Ibikorwa byihuse</h3>
+                        <div class="card-grid animate-on-scroll">
+                            <a href="#tasks" class="card flex flex-col align-center text-center">
+                                <i class="card-icon fas fa-play-circle"></i>
+                                <h3>Tangira IMIRIMO</h3>
+                                <p>Irangize inshingano zoroheje winjize amafaranga.</p>
+                                <span class="btn btn-secondary btn-small mt-16">Reba imirimo</span>
+                            </a>
+                            <a href="#post-task" class="card flex flex-col align-center text-center">
+                                <i class="card-icon fas fa-bullhorn"></i>
+                                <h3>Sangiza umurimo wawe</h3>
+                                <p>Tanga akazi kawe ku bandi kugirango bagukorere.</p>
+                                <span class="btn btn-secondary btn-small mt-16">Tanga umurimo</span>
+                            </a>
+                            <a href="#withdraw" class="card flex flex-col align-center text-center">
+                                <i class="card-icon fas fa-cash-register"></i>
+                                <h3>Kuramo amafaranga</h3>
+                                <p>Bikuza amafaranga kuri konti yawe.</p>
+                                <span class="btn btn-secondary btn-small mt-16">Bikuza</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tasks Page -->
+            <section id="tasks" class="page container pt-64">
+                <div class="tasks-section">
+                    <div class="header">
+                        <h2>Imirimo ihari</h2>
+                        <a href="#post-task" class="btn btn-primary btn-icon"><i class="fas fa-plus"></i> Tanga Umurimo</a>
+                    </div>
+
+                    <div class="dashboard-grid mb-32">
+                        <div class="dashboard-card">
+                            <h3>Imirimo ihari</h3>
+                            <div class="value" id="tasks-available-count">79</div>
+                            <p>Akazi ushobora gukora ako kanya.</p>
+                        </div>
+                        <div class="dashboard-card">
+                            <h3>Amafaranga ashobora kuboneka</h3>
+                            <div class="value">RF <span id="tasks-potential-earnings">2100</span></div>
+                            <p>Amafaranga winjiza uramutse uyikoze yose.</p>
+                        </div>
+                        <div class="dashboard-card">
+                            <h3>Ayatarishyurwa</h3>
+                            <div class="value">RF <span id="tasks-pending-payment">870</span></div>
+                            <p>Amafaranga y'imirimo wakoze ariko atarishurwa.</p>
+                        </div>
+                    </div>
+
+                    <h3 class="mb-24">Imirimo mishya</h3>
+                    <div class="task-card-list" id="available-tasks">
+                        <!-- Example Task Card -->
+                        <div class="task-card animate-on-scroll">
+                            <h4>Gukunda Page ya Facebook (Amakuru)</h4>
+                            <div class="task-meta">
+                                <span><i class="fas fa-clock"></i> 3 Imint.</span>
+                                <span><i class="fas fa-coins"></i> 30 RF</span>
+                                <span><i class="fas fa-percent"></i> 82% Byarishuwe</span>
+                            </div>
+                            <p class="task-description multiline-ellipsis">Amabwiriza: Shyiramo link ya page yacu ya facebook uyikunde, unashyiremo like kuri posts 3 hanyuma urekereho comment igaragaza ko wayikunze. Fata screen shot yose uko bikoze...</p>
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" style="width: 82%;"></div>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-primary btn-small" onclick="viewTaskDetails('Facebook Like', 'https://www.facebook.com/imrimo_rw', 'Shyiramo link ya page yacu ya facebook uyikunde, unashyiremo like kuri posts 3 hanyuma urekereho comment igaragaza ko wayikunze. Fata screen shot yose uko bikoze. Amafaranga azatangwa nyuma y’amasaha 24 ukimara gukora akazi.', '30 RF', 'Social media')">Reba Kuri <i class="fas fa-arrow-right"></i></button>
+                                <button class="btn btn-outline btn-small"><i class="fas fa-star"></i> Ongeraho iby'urukundo</button>
+                            </div>
+                        </div>
+                        <div class="task-card animate-on-scroll">
+                            <h4>Kureba Videwo kuri YouTube</h4>
+                            <div class="task-meta">
+                                <span><i class="fas fa-clock"></i> 5 Imint.</span>
+                                <span><i class="fas fa-coins"></i> 50 RF</span>
+                                <span><i class="fas fa-percent"></i> 65% Byarishuwe</span>
+                            </div>
+                            <p class="task-description multiline-ellipsis">Amabwiriza: Reba videwo yacu yuzuye kuri YouTube, ukore like, usige igitekerezo cyiza. Fata screenshot igaragaza ko wayirebye. Kwishyura mugihe cy'amasaha 48. ...</p>
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" style="width: 65%;"></div>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-primary btn-small" onclick="viewTaskDetails('YouTube Video', 'https://www.youtube.com/watch?v=imirimotutorial', 'Reba videwo yacu yuzuye kuri YouTube, ukore like, usige igitekerezo cyiza. Fata screenshot igaragaza ko wayirebye. Kwishyura mugihe cyamasaha 48.', '50 RF', 'Social media')">Reba Kuri <i class="fas fa-arrow-right"></i></button>
+                                <button class="btn btn-outline btn-small"><i class="fas fa-star"></i> Ongeraho iby'urukundo</button>
+                            </div>
+                        </div>
+                        <div class="task-card animate-on-scroll">
+                            <h4>Kujya kuri Website no Gusubiramo</h4>
+                            <div class="task-meta">
+                                <span><i class="fas fa-clock"></i> 10 Imint.</span>
+                                <span><i class="fas fa-coins"></i> 80 RF</span>
+                                <span><i class="fas fa-percent"></i> 40% Byarishuwe</span>
+                            </div>
+                            <p class="task-description multiline-ellipsis">Amabwiriza: Jya kuri website yacu (link irikuriho), urebe ibicuruzwa 3 hanyuma ushireho igitekerezo kuri website yacu. Fata screenshot zigaragaza izi ntambwe. Kwishyura mugihe cyamasaha 72. ...</p>
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" style="width: 40%;"></div>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-primary btn-small" onclick="viewTaskDetails('Website Review', 'https://imirimo.rw/products', 'Jya kuri website yacu (link irikuriho), urebe ibicuruzwa 3 hanyuma ushireho igitekerezo kuri website yacu. Fata screenshot zigaragaza izi ntambwe. Kwishyura muguhe cyamasaha 72.', '80 RF', 'Website Review')">Reba Kuri <i class="fas fa-arrow-right"></i></button>
+                                <button class="btn btn-outline btn-small"><i class="fas fa-star"></i> Ongeraho iby'urukundo</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="mb-24 mt-48">Imirimo itarishyurwa</h3>
+                    <div class="task-card-list" id="pending-tasks">
+                        <p class="text-center light-text-color" id="no-pending-tasks">Nta mirimo itarishyurwa irahari ubu.</p>
+                        <!-- Example pending task (hidden by default unless user has specific pending tasks) -->
+                        <div class="task-card animate-on-scroll" style="display:none;">
+                            <h4>Gukunda Page ya Instagram yayemaze gukorwa</h4>
+                            <div class="task-meta">
+                                <span><i class="fas fa-clock"></i> 2 Imint.</span>
+                                <span><i class="fas fa-coins"></i> 25 RF</span>
+                                <span><i class="fas fa-hourglass-half"></i> Gutegereje kwemezwa</span>
+                            </div>
+                            <p class="task-description">Wakoze uyu murimo. Amafaranga ategereje kwemezwa n'uwatangaje umurimo.</p>
+                            <div class="btn-group">
+                                <button class="btn btn-outline btn-small" disabled>Itarishyurwa</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Task Instructions Page (Dynamic Content Rendered Here) -->
+            <section id="task-instructions" class="page container pt-64" style="display:none;">
+                <div class="header task-header">
+                    <h2 id="instruction-task-title"></h2>
+                    <button class="btn btn-secondary" onclick="window.location.hash='#tasks'"><i class="fas fa-arrow-left"></i> Subira Inyuma</button>
+                </div>
+                <div class="task-details card animate-on-scroll">
+                    <h3>Amabwiriza</h3>
+                    <p id="instruction-task-description"></p>
+                    <p><strong>Link y'umurimo:</strong> <a href="#" target="_blank" id="instruction-task-link"></a></p>
+                    <p><strong>Igihembo:</strong> <span id="instruction-task-credit"></span></p>
+                    <p><strong>Icyiciro:</strong> <span id="instruction-task-category"></span></p>
+                </div>
+                <div class="proof-upload-section card animate-on-scroll">
+                    <h3>Ongeramo Igitangaza (Proof)</h3>
+                    <p>Fata screenshot igaragaza ko wakoze umurimo hanyuma uyishyireho.</p>
+                    <div class="file-upload-box" id="proof-upload-box">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Kanda cyangwa ubukiremo ifoto hano.</p>
+                        <input type="file" id="proof-screenshot-input" accept="image/*" style="display: none;">
+                    </div>
+                    <img id="proof-image-preview" class="uploaded-file-preview" style="display:none;" alt="Igitangaza">
+                    <button class="btn btn-primary mt-24" id="submit-proof-button" disabled>Ohereza Igitangaza</button>
+                </div>
+            </section>
+
+            <!-- Post Task Page -->
+            <section id="post-task" class="page container pt-64">
+                <h2 class="section-title">Tanga Umurimo Mushya</h2>
+                <form id="post-task-form" class="card post-task-form animate-on-scroll">
+                    <div class="form-group">
+                        <label for="task-name">Izina ry'umurimo:</label>
+                        <input type="text" id="task-name" placeholder="Urug. Gukunda Page ya Facebook" required>
+                        <div class="error-message" id="error-task-name">Izina ry'umurimo rirakenewe.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-instructions">Amabwiriza:</label>
+                        <textarea id="task-instructions" rows="6" placeholder="Andika amabwiriza asobanutse. Nka: Jya kuri link, ukore like, ushireho comment, hanyuma ufotore (screenshot)." required></textarea>
+                        <div class="error-message" id="error-task-instructions">Amabwiriza arashyurwa.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-link">Link y'umurimo (niba ihari):</label>
+                        <input type="url" id="task-link" placeholder="Urug. https://www.facebook.com/yourpage">
+                    </div>
+
+                    <h3 class="form-section-title">Ameza y'umurimo</h3>
+                    <div class="grid-2-cols">
+                        <div class="form-group">
+                            <label for="task-difficulty">Ubukana:</label>
+                            <select id="task-difficulty" required>
+                                <option value="">Hitamo ubukana</option>
+                                <option value="easy">Byoroshye</option>
+                                <option value="medium">Buringaniye</option>
+                                <option value="hard">Bikomeye</option>
+                            </select>
+                            <div class="error-message" id="error-task-difficulty">Ubukana burakenewe.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-category">Icyiciro:</label>
+                            <select id="task-category" required>
+                                <option value="">Hitamo icyiciro</option>
+                                <option value="social-media">Social media</option>
+                                <option value="gaming">Gaming</option>
+                                <option value="signup">Kwisinya</option>
+                                <option value="watching">Kureba</option>
+                                <option value="survey">Gushaka amakuru</option>
+                            </select>
+                            <div class="error-message" id="error-task-category">Icyiciro kirakenewe.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-frequency">Frequency:</label>
+                            <select id="task-frequency" required>
+                                <option value="once">Once off</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-time-estimate">Igihe gikwiriye (muri munota):</label>
+                            <select id="task-time-estimate" required>
+                                <option value="">Hitamo igihe</option>
+                                <option value="1">1 munota</option>
+                                <option value="3">3 iminota</option>
+                                <option value="5">5 iminota</option>
+                                <option value="10">10 iminota</option>
+                            </select>
+                            <div class="error-message" id="error-task-time-estimate">Igihe kirakenewe.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-reward">Igihembo kuri buri mukoresha (RF):</label>
+                            <select id="task-reward" required>
+                                <option value="">Hitamo igihembo</option>
+                                <option value="20">20 RF</option>
+                                <option value="30">30 RF</option>
+                                <option value="50">50 RF</option>
+                                <option value="70">70 RF</option>
+                                <option value="100">100 RF</option>
+                            </select>
+                            <div class="error-message" id="error-task-reward">Igihembo kirakenewe.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-credit-duration">Kwishyura mugihe ki (amasaha):</label>
+                            <select id="task-credit-duration" required>
+                                <option value="">Hitamo igihe cyo kwishyura</option>
+                                <option value="1">1 Saa</option>
+                                <option value="3">3 Amasaha</option>
+                                <option value="24">24 Amasaha</option>
+                                <option value="48">48 Amasaha</option>
+                                <option value="72">72 Amasaha</option>
+                            </select>
+                            <div class="error-message" id="error-task-credit-duration">Igihe cyo kwishyura kirakenewe.</div>
+                        </div>
+                    </div>
+
+                    <h3 class="form-section-title">Ifoto y'Igitangaza (Proof) na Ifoto ngufi</h3>
+                    <div class="grid-2-cols">
+                        <div class="form-group">
+                            <label for="sample-proof-screenshot">Ongeramo Ifoto y’Igitangaza cy’Urugero (Sample Proof Screenshot):</label>
+                            <input type="file" id="sample-proof-screenshot" accept="image/*">
+                            <img id="sample-proof-preview" class="uploaded-file-preview image-upload-preview" style="display:none;" alt="Ifoto y’Igitangaza cy’Urugero">
+                        </div>
+                        <div class="form-group">
+                            <label for="task-thumbnail">Ongeramo Ifoto ngufi y'umurimo (Task Thumbnail):</label>
+                            <input type="file" id="task-thumbnail" accept="image/*">
+                            <img id="thumbnail-preview" class="uploaded-file-preview image-upload-preview" style="display:none;" alt="Ifoto ngufi y'umurimo">
+                        </div>
+                    </div>
+
+                    <h3 class="form-section-title">Hitamo abakozi n'Ingengo y'Imari</h3>
+                    <div class="form-group">
+                        <label>Abakozi bashobora gukora umurimo:</label>
+                        <div class="worker-count-selection" role="radiogroup">
+                            <input type="radio" id="workers-50" name="worker-count" value="50" data-cost="2500" required>
+                            <label for="workers-50">50 abakozi<br><span>(2500 RF)</span></label>
+
+                            <input type="radio" id="workers-100" name="worker-count" value="100" data-cost="5000">
+                            <label for="workers-100">100 abakozi<br><span>(5000 RF)</span></label>
+
+                            <input type="radio" id="workers-500" name="worker-count" value="500" data-cost="15000">
+                            <label for="workers-500">500 abakozi<br><span>(15000 RF)</span></label>
+
+                            <input type="radio" id="workers-1000" name="worker-count" value="1000" data-cost="30000">
+                            <label for="workers-1000">1000 abakozi<br><span>(30000 RF)</span></label>
+
+                            <input type="radio" id="workers-5000" name="worker-count" value="5000" data-cost="50000">
+                            <label for="workers-5000">5000 abakozi<br><span>(50000 RF)</span></label>
+                        </div>
+                        <div class="error-message" id="error-worker-count">Ukenewe guhitamo umubare w'abakozi.</div>
+                        <p class="mt-16">Igiciro cyose: <strong id="total-task-cost">0 RF</strong></p>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block mt-32">Komeza Gutangaza Umurimo</button>
+                </form>
+            </section>
+
+            <!-- Deposit Page -->
+            <section id="deposit" class="page container pt-64">
+                <h2 class="section-title">Bitsa Amafaranga (<i class="fas fa-wallet"></i>)</h2>
+                <form id="deposit-form" class="card auth-card animate-on-scroll">
+                    <div class="form-group">
+                        <label for="deposit-method">Hitamo uburyo bwo kwishyura:</label>
+                        <select id="deposit-method" required>
+                            <option value="">Hitamo uburyo</option>
+                            <option value="mtn">MTN Mobile Money</option>
+                            <option value="airtel">Airtel Money</option>
+                            <!-- <option value="stripe">Stripe (Soon)</option> -->
+                        </select>
+                        <div class="error-message" id="error-deposit-method">Ukenewe guhitamo uburyo bwo kwishyura.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="deposit-amount">Shyiramo amafaranga:</label>
+                        <input type="number" id="deposit-amount" placeholder="Urug. 5000" min="500" required>
+                        <div class="error-message" id="error-deposit-amount">Ukenewe nibura RF 500.</div>
+                    </div>
+
+                    <div id="mtn-info" class="payment-info-box" style="display:none;">
+                        <h4>Amabwiriza ya MTN Mobile Money:</h4>
+                        <p>1. Shyiramo *182*1*1*0792211864*<span id="mtn-deposit-amount-display">0</span>#</p>
+                        <p>2. Shyiramo PIN yawe.</p>
+                        <p>3. Nyuma yo kwishyura, fata screenshot igaragaza ko watsinze.</p>
+                        <div class="ussd-code">USSD Code: *182*1*1*0792211864*<span id="ussd-amount-display">0</span>#</div>
+                        <button type="button" class="btn btn-primary btn-small mt-16" onclick="triggerUSSD()">Kanda hano kujya muri USSD</button>
+                    </div>
+
+                    <div id="airtel-info" class="payment-info-box" style="display:none;">
+                        <h4>Amabwiriza ya Airtel Money:</h4>
+                        <p>1. Shyiramo *182*1*1*0792211864*<span id="airtel-deposit-amount-display">0</span>#</p>
+                        <p>2. Shyiramo PIN yawe.</p>
+                        <p>3. Nyuma yo kwishyura, fata screenshot igaragaza ko watsinze.</p>
+                        <div class="ussd-code">USSD Code: *182*1*1*0792211864*<span id="airtel-ussd-amount-display">0</span>#</div>
+                         <button type="button" class="btn btn-primary btn-small mt-16" onclick="triggerUSSD()">Kanda hano kujya muri USSD</button>
+                    </div>
+
+                    <div class="form-group mt-32">
+                        <label for="deposit-proof-screenshot">Ongeramo Ifoto y'igitangaza (Screenshot):</label>
+                        <input type="file" id="deposit-proof-screenshot" accept="image/*" required>
+                        <img id="deposit-proof-preview" class="uploaded-file-preview" style="display:none;" alt="Igitangaza">
+                        <div class="error-message" id="error-deposit-proof">Ukenewe kohereza ifoto y'igitangaza.</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mt-32">Ohereza Igitangaza</button>
+                </form>
+            </section>
+
+            <!-- Withdraw Page -->
+            <section id="withdraw" class="page container pt-64">
+                <h2 class="section-title">Kuramo Amafaranga (<i class="fas fa-money-check-alt"></i>)</h2>
+                <form id="withdraw-form" class="card auth-card animate-on-scroll">
+                    <h3>Amakuru yanditseho:</h3>
+                    <div class="payment-info-box">
+                        <p><strong>Amazina:</strong> <span id="withdraw-fullname">Karahamuheto</span></p>
+                        <p><strong>Nimero ya Telephone:</strong> <span id="withdraw-phone">07XXXXXXXX</span></p>
+                        <p class="light-text-color">Aya makuru ntashobora guhinduka. Nyamuneka, twandikire niba ushaka kuyahindura.</p>
+                    </div>
+
+                    <div class="form-group mt-32">
+                        <label for="withdraw-amount">Andika amafaranga ushaka gukuramo:</label>
+                        <input type="number" id="withdraw-amount" placeholder="Urug. 1000" min="500" required>
+                        <div class="error-message" id="error-withdraw-amount">Ukenewe nibura RF 500.</div>
+                    </div>
+
+                    <div class="withdraw-rules">
+                        <h4>Amategeko yo gukuramo amafaranga:</h4>
+                        <ul>
+                            <li><strong>Amafaranga make:</strong> 500 RF</li>
+                            <li><strong>Ibishusho:</strong> 9% ku mafaranga yose.</li>
+                            <li>Kugirango ubashe gukuramo amafaranga agomba kuba yaragiyemo kuri konti yawe.</li>
+                            <li>Amafaranga atangwa mu gihe cy'amasaha 24 nyuma yo kuyasaba.</li>
+                        </ul>
+                        <p class="mt-16">Uzahabwa: <strong id="withdraw-final-amount">0 RF</strong></p>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block mt-32">Kuramo</button>
+                </form>
+            </section>
+
+            <!-- Notifications Page -->
+            <section id="notifications" class="page container pt-64">
+                <h2 class="section-title">Ibikubashukanye Byongeyeho (<i class="fas fa-bell"></i>)</h2>
+                <div class="notification-list" id="notification-list">
+                    <div class="notification-item unread animate-on-scroll">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="notification-content">
+                            <p>Amafaranga yashyizwe kuri konti yawe!</p>
+                            <small>Amafaranga ashyizwe kuri konti yawe ya MTN Mobile Money. Byemerejwe!</small>
+                            <small>Muri iki gihe: 2 min zishize</small>
+                        </div>
+                    </div>
+                    <div class="notification-item animate-on-scroll">
+                        <i class="fas fa-money-bill-transfer"></i>
+                        <div class="notification-content">
+                            <p>Ibitangaza byawe by'umwirondoro byemejwe.</p>
+                            <small>Amafaranga 30 RF yashyizwe kuri konti yawe nyuma yo kwemezwa n'uwatangaje akazi.</small>
+                            <small>Muri iki gihe: 1 Saa yishize</small>
+                        </div>
+                    </div>
+                    <div class="notification-item animate-on-scroll">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div class="notification-content">
+                            <p>Intambwe yo gukuramo yaranze.</p>
+                            <small>Amafaranga RF 1000 wari wasabye gukuramo yaranzwe kuko udafite amafaranga ahagije kuri konti yawe. Nyamuneka ongera ugerageze.</small>
+                            <small>Muri iki gihe: 2 Amasaha yishize</small>
+                        </div>
+                    </div>
+                    <div class="notification-item unread animate-on-scroll">
+                        <i class="fas fa-user-plus"></i>
+                        <div class="notification-content">
+                            <p>Welcome to IMIRIMO!</p>
+                            <small>Murakaza neza kuri IMIRIMO! Tangira gukora imirimo cyangwa utange iyawe.</small>
+                            <small>Muri iki gihe: 5 Amasaha yishize</small>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Support Page -->
+            <section id="support" class="page container pt-64">
+                <h2 class="section-title">Ubufasha n'Ikibazo (<i class="fas fa-headset"></i>)</h2>
+                <div class="contact-content">
+                    <div class="contact-info animate-on-scroll">
+                        <h3>Twandikire!</h3>
+                        <p>Dushishikajwe no kugufasha. Waba ufite ibibazo, ibitekerezo, cyangwa ugize ikibazo, tubwire!</p>
+                        <ul>
+                            <li><i class="fas fa-map-marker-alt"></i> <div>Kigali, Rwanda</div></li>
+                            <li><i class="fas fa-phone-alt"></i> <div>+250 795 166 910</div></li>
+                            <li><i class="fas fa-envelope"></i> <div>support@imirimo.rw</div></li>
+                            <li><i class="fab fa-whatsapp"></i> <div>WhatsApp: +250 795 166 910</div></li>
+                            <li><i class="fab fa-telegram-plane"></i> <div>Telegram: @IMIRIMO_Support</div></li>
+                        </ul>
+                    </div>
+                    <div class="contact-form animate-on-scroll">
+                        <h3>Twoherereze Ubutumwa</h3>
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <label for="contact-name">Amazina yawe:</label>
+                                <input type="text" id="contact-name" placeholder="Amazina yuzuye" required>
+                                <div class="error-message" id="error-contact-name">Amazina arashyurwa.</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-email">Email yawe:</label>
+                                <input type="email" id="contact-email" placeholder="Email yawe" required>
+                                <div class="error-message" id="error-contact-email">Email itari yo.</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-subject">Icyo uvuga:</label>
+                                <input type="text" id="contact-subject" placeholder="Icyo ushaka ko dusobanukirwa" required>
+                                <div class="error-message" id="error-contact-subject">Icyo uvuga kirakenewe.</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-message">Ubutumwa bwawe:</label>
+                                <textarea id="contact-message" rows="5" placeholder="Ubutumwa bwawe" required></textarea>
+                                <div class="error-message" id="error-contact-message">Ubutumwa burashyurwa.</div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Ohereza Ubutumwa</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Admin Panel Page -->
+            <section id="admin-panel" class="page container pt-64">
+                <h2 class="section-title">Admin Panel (<i class="fas fa-user-shield"></i>)</h2>
+                <div class="admin-panel">
+                    <div class="dashboard-grid">
+                         <div class="dashboard-card animate-on-scroll">
+                            <h3>Abakoresha bose</h3>
+                            <div class="value"><span>1,200</span></div>
+                            <p>Umubare w'abakoresha bose.</p>
+                        </div>
+                        <div class="dashboard-card animate-on-scroll">
+                            <h3>Imirimo yose</h3>
+                            <div class="value"><span>500</span></div>
+                            <p>Imirimo yose yatanzwe.</p>
+                        </div>
+                        <div class="dashboard-card animate-on-scroll">
+                            <h3>Amafaranga yinjije</h3>
+                            <div class="value">RF <span>2,500,000</span></div>
+                            <p>Amafaranga yose yinjiye.</p>
+                        </div>
+                         <div class="dashboard-card animate-on-scroll">
+                            <h3>Imirimo irimo gukorwa</h3>
+                            <div class="value"><span>150</span></div>
+                            <p>Imirimo ibereye kwemezwa.</p>
+                        </div>
+                    </div>
+
+                    <h3 class="mt-48">Gucunga ama deposits</h3>
+                    <div class="admin-search-filter">
+                        <input type="text" id="deposit-search" placeholder="Shakisha deposits...">
+                        <select id="deposit-status-filter">
+                            <option value="all">Status yose</option>
+                            <option value="pending">Gutegereje</option>
+                            <option value="approved">Yemerewe</option>
+                            <option value="rejected">Yanzwe</option>
+                        </select>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>#ID</th>
+                                <th>Umukoresha</th>
+                                <th>Amafaranga</th>
+                                <th>Uburyo</th>
+                                <th>Igihe</th>
+                                <th>Igitangaza</th>
+                                <th>Status</th>
+                                <th>Ibikorwa</th>
+                            </tr>
+                        </thead>
+                        <tbody id="deposit-table-body">
+                            <tr>
+                                <td>DEP001</td>
+                                <td>User123</td>
+                                <td>10,000 RF</td>
+                                <td>MTN</td>
+                                <td>2023-10-26 10:30</td>
+                                <td><a href="https://via.placeholder.com/400x300?text=Igitangaza" target="_blank">Reba</a></td>
+                                <td><span class="status-badge pending">Gutegereje</span></td>
+                                <td class="admin-actions">
+                                    <button class="btn btn-primary btn-small">Emeza</button>
+                                    <button class="btn btn-secondary btn-small">Yanga</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>DEP002</td>
+                                <td>Karahamuheto</td>
+                                <td>5,000 RF</td>
+                                <td>Airtel</td>
+                                <td>2023-10-26 09:15</td>
+                                <td><a href="https://via.placeholder.com/400x300?text=Igitangaza" target="_blank">Reba</a></td>
+                                <td><span class="status-badge approved">Yemerewe</span></td>
+                                <td class="admin-actions">
+                                    <button class="btn btn-primary btn-small" disabled>Emeza</button>
+                                    <button class="btn btn-secondary btn-small" disabled>Yanga</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                     <h3 class="mt-48">Gucunga abakoresha</h3>
+                    <div class="admin-search-filter">
+                        <input type="text" id="user-search" placeholder="Shakisha abakoresha...">
+                        <select id="user-status-filter">
+                            <option value="all">Status yose</option>
+                            <option value="active">Bariho</option>
+                            <option value="blocked">Bazitiwe</option>
+                        </select>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>#ID</th>
+                                <th>Amazina</th>
+                                <th>Nimero</th>
+                                <th>Amahano</th>
+                                <th>Ubuzima</th>
+                                <th>Status</th>
+                                <th>Ibikorwa</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-table-body">
+                            <tr>
+                                <td>USR001</td>
+                                <td>Karahamuheto</td>
+                                <td>0781234567</td>
+                                <td>25,000 RF</td>
+                                <td>Worker, Employer</td>
+                                <td><span class="status-badge active">Bariho</span></td>
+                                <td class="admin-actions">
+                                    <button class="btn btn-secondary btn-small">Zinga</button>
+                                    <button class="btn btn-primary btn-small">Genzura</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>USR002</td>
+                                <td>Mukamana</td>
+                                <td>0729876543</td>
+                                <td>1,000 RF</td>
+                                <td>Worker</td>
+                                <td><span class="status-badge blocked">Bazitiwe</span></td>
+                                <td class="admin-actions">
+                                    <button class="btn btn-primary btn-small">Rekura</button>
+                                    <button class="btn btn-secondary btn-small">Genzura</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+             <!-- About Section -->
+             <section id="about" class="page container pt-64">
+                <div class="section-title animate-on-scroll">
+                    <h2>Kuki ukwiye guhitamo IMIRIMO?</h2>
+                    <p>Imirimo itanga umwanya mwiza ku bashaka kwinjiza amafaranga ku murongo ndetse no ku bashaka gukoresha imirimo irindimo.</p>
+                </div>
+                <div class="card-grid animate-on-scroll">
+                    <div class="card">
+                        <i class="card-icon fas fa-dollar-sign"></i>
+                        <h3>Injiza byoroshye</h3>
+                        <p>Kora imirimo yoroheje kandi yihariye ku murongo. Uruhuke kandi winjize amafaranga.</p>
+                    </div>
+                    <div class="card">
+                        <i class="card-icon fas fa-lightbulb"></i>
+                        <h3>Tanga ibitekerezo</h3>
+                        <p>Ukenewe ko abantu bagukorera imirimo runaka? Tanga imirimo yawe ku kiguzi make.</p>
+                    </div>
+                    <div class="card">
+                        <i class="card-icon fas fa-shield-alt"></i>
+                        <h3>Umumaro n'Umwizerwa</h3>
+                        <p>Dusubiramo buri murimo kugirango duhe abakozi bawe akazi keza.</p>
+                    </div>
+                    <div class="card">
+                        <i class="card-icon fas fa-mobile-alt"></i>
+                        <h3>Ikoranabuhanga rya mobile</h3>
+                        <p>Koresha IMIRIMO kuri terefone yawe, aho uri hose, igihe cyose.</p>
+                    </div>
+                </div>
+
+                <div class="section-title mt-64 animate-on-scroll">
+                    <h2>Abakoresha bacu baravuga iki?</h2>
+                    <p>Reba ibyo abakoresha bacu bavuga ku ijambo banga rya IMIRIMO.</p>
+                </div>
+                <div class="testimonial-grid animate-on-scroll">
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left"></i>
+                        <p>"IMIRIMO yatumye kwinjiza amafaranga ku murongo biroroha. Ndi umunyeshuri kandi nkenere amafaranga yo kwiga kandi IMIRIMO yabyoroshye."</p>
+                        <div class="testimonial-author">
+                            <img src="https://i.pravatar.cc/50?img=68" alt="Uwatanze Ubuhamya">
+                            <div class="testimonial-author-info">
+                                <strong>Jeanette K.</strong>
+                                <span>Umukozi</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left"></i>
+                        <p>"Nashoboye kubona abantu benshi bakora akazi kanjye ku buryo nibera. Nari mfite akantu gake nkenere gukorwa vuba kandi IMIRIMO yampaye umwanana."</p>
+                        <div class="testimonial-author">
+                            <img src="https://i.pravatar.cc/50?img=69" alt="Uwatanze Ubuhamya">
+                            <div class="testimonial-author-info">
+                                <strong>Patrick M.</strong>
+                                <span>Uwatanga Umurimo</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left"></i>
+                        <p>"Serivisi yabo ni nziza! Iyo ngize ikibazo, bampfa vuba. Iki kintu ni cyiza rwose!"</p>
+                        <div class="testimonial-author">
+                            <img src="https://i.pravatar.cc/50?img=70" alt="Uwatanze Ubuhamya">
+                            <div class="testimonial-author-info">
+                                <strong>Claudine D.</strong>
+                                <span>Umukozi</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-info">
+                    <a href="#home" class="footer-logo"><i class="fas fa-briefcase"></i> IMIRIMO</a>
+                    <p>Kora cyangwa utange imirimo mito, winjize amafaranga cyangwa ubonere solution ku bibazo byawe.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Amakuru Ahari</h4>
+                    <ul>
+                        <li><a href="#about">Kuri Twebwe</a></li>
+                        <li><a href="#tasks">Imirimo</a></li>
+                        <li><a href="#post-task">Tanga Umurimo</a></li>
+                        <li><a href="#support">Ubufasha</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Ubufasha</h4>
+                    <ul>
+                        <li><a href="#faq">Ibibazo Bikunze Kubazwa</a></li>
+                        <li><a href="#terms">Amategeko n'Amabwiriza</a></li>
+                        <li><a href="#privacy">Politiki y'Ibizaba</a></li>
+                        <li><a href="#contact">Twandikire</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Akazi</h4>
+                    <ul>
+                        <li><a href="#">Uko Kwinjiza Amafaranga</a></li>
+                        <li><a href="#">Uko Utanga Umurimo</a></li>
+                        <li><a href="#">Akazi k'Abakozi</a></li>
+                        <li><a href="#">Akazi k'Abatanga Imirimo</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2023 IMIRIMO. Uburenganzira bwose bwabitswe.
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script>
+        // State Management
+        const state = {
+            currentUser: null,
+            users: JSON.parse(localStorage.getItem('imirimoUsers')) || [],
+            tasks: JSON.parse(localStorage.getItem('imirimoTasks')) || [],
+            deposits: JSON.parse(localStorage.getItem('imirimoDeposits')) || [],
+            withdrawals: JSON.parse(localStorage.getItem('imirimoWithdrawals')) || [],
+        };
+
+        // DOM Elements
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('.nav-links a, .mobile-nav a, .sidebar-nav a');
+        const authButtons = document.querySelector('.navbar .auth-buttons');
+        const mobileAuthButtons = document.querySelector('.mobile-nav .auth-buttons');
+        const hamburger = document.querySelector('.hamburger');
+        const mobileNav = document.querySelector('.mobile-nav');
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const toastContainer = document.getElementById('toast-container');
+        const logoutButton = document.getElementById('logout-button');
+        const adminPanelLink = document.getElementById('admin-panel-link');
+
+        // Admin User (hardcoded for demo)
+        const ADMIN_PHONE = "0795166910";
+
+        // Utility Functions
+        function showLoading() {
+            loadingOverlay.classList.add('active');
+        }
+
+        function hideLoading() {
+            loadingOverlay.classList.remove('active');
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.classList.add('toast', type);
+            let icon = '';
+            if (type === 'success') icon = '<i class="fas fa-check-circle"></i>';
+            else if (type === 'error') icon = '<i class="fas fa-times-circle"></i>';
+            else if (type === 'info') icon = '<i class="fas fa-info-circle"></i>';
+            toast.innerHTML = `${icon}<span>${message}</span>`;
+            toastContainer.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 5000);
+        }
+
+        function generateUniqueId(prefix) {
+            return prefix + Date.now().toString(36) + Math.random().toString(36).substr(2, 5).toUpperCase();
+        }
+
+        function debounce(func, delay) {
+            let timeout;
+            return function(...args) {
+                const context = this;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), delay);
+            };
+        }
+
+        // Routing Logic
+        function navigate(hash) {
+            showLoading();
+            setTimeout(() => { // Simulate network delay
+                pages.forEach(page => page.style.display = 'none');
+                
+                let targetPageId = hash.substring(1) || 'home';
+                let targetPage = document.getElementById(targetPageId);
+
+                // Handle protected routes
+                if (['dashboard', 'post-task', 'deposit', 'withdraw', 'notifications', 'support', 'task-instructions'].includes(targetPageId)) {
+                    if (!state.currentUser) {
+                        hash = '#login';
+                        targetPageId = 'login';
+                        targetPage = document.getElementById(targetPageId);
+                        showToast('Ukenewe kwinjira kugirango ubashe kureba iyi page.', 'error');
+                    } else {
+                        updateDashboard();
+                        updateSidebar();
+                        if (targetPageId === 'notifications') renderNotifications();
+                        if (targetPageId === 'deposit') updateDepositDisplay();
+                        if (targetPageId === 'withdraw') updateWithdrawDisplay();
+                    }
+                }
+
+                // Admin route protection
+                if (targetPageId === 'admin-panel') {
+                    if (!state.currentUser || state.currentUser.phone !== ADMIN_PHONE) {
+                        hash = '#dashboard';
+                        targetPageId = 'dashboard';
+                        targetPage = document.getElementById(targetPageId);
+                        showToast('Wapfuwe kureba iyi page.', 'error');
+                    } else {
+                        renderAdminDeposits();
+                        renderAdminUsers();
+                    }
+                }
+
+                // If task instructions page is navigated directly (should be from tasks page)
+                if (targetPageId === 'task-instructions' && !state.currentTaskInstructions) {
+                    hash = '#tasks'; // Redirect to tasks if no task is selected
+                    targetPageId = 'tasks';
+                    targetPage = document.getElementById(targetPageId);
+                }
+
+                if (targetPage) {
+                    targetPage.style.display = 'block';
+                    window.scrollTo(0, 0); // Scroll to top on page change
+                } else {
+                    document.getElementById('home').style.display = 'block'; // Fallback to home
+                    hash = '#home';
+                    showToast('Page ntiboneka, ujyanwe ahabanza.', 'error');
+                }
+
+                // Update active nav link
+                navLinks.forEach(link => link.classList.remove('active'));
+                const activeLink = document.querySelector(`.nav-links a[href="${hash}"], .mobile-nav a[href="${hash}"], .sidebar-nav a[href="${hash}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+                
+                history.pushState(null, '', hash);
+                hideLoading();
+            }, 300); // Simulate network delay
+        }
+
+        function handleHashChange() {
+            navigate(window.location.hash);
+            mobileNav.classList.remove('active');
+            hamburger.classList.remove('active');
+        }
+
+        // Auth Logic
+        function saveState() {
+            localStorage.setItem('imirimoUsers', JSON.stringify(state.users));
+            localStorage.setItem('imirimoTasks', JSON.stringify(state.tasks));
+            localStorage.setItem('imirimoDeposits', JSON.stringify(state.deposits));
+            localStorage.setItem('imirimoWithdrawals', JSON.stringify(state.withdrawals));
+        }
+
+        function authenticateUser(user) {
+            state.currentUser = user;
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            updateAuthUI();
+            navigate('#dashboard');
+        }
+
+        function logout() {
+            state.currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateAuthUI();
+            showToast('Wasohotse neza.', 'info');
+            navigate('#home');
+        }
+
+        function updateAuthUI() {
+            if (state.currentUser) {
+                authButtons.innerHTML = `<button class="btn btn-outline" id="logout-button-desktop">Sohoka</button>`;
+                mobileAuthButtons.innerHTML = `<button class="btn btn-outline" id="logout-button-mobile">Sohoka</button>`;
+                document.getElementById('logout-button-desktop').addEventListener('click', logout);
+                document.getElementById('logout-button-mobile').addEventListener('click', logout);
+                if (state.currentUser.phone === ADMIN_PHONE) {
+                    adminPanelLink.style.display = 'block';
+                } else {
+                    adminPanelLink.style.display = 'none';
+                }
+            } else {
+                authButtons.innerHTML = `<a href="#login" class="btn btn-outline">Injira</a>
+                                        <a href="#signup" class="btn btn-primary">Hanga Konti</a>`;
+                mobileAuthButtons.innerHTML = `<a href="#login" class="btn btn-outline">Injira</a>
+                                               <a href="#signup" class="btn btn-primary">Hanga Konti</a>`;
+                adminPanelLink.style.display = 'none';
+            }
+        }
+
+        function validateForm(formId) {
+            const form = document.getElementById(formId);
+            let isValid = true;
+            form.querySelectorAll('[required]').forEach(input => {
+                const formGroup = input.closest('.form-group') || input.closest('.checkbox-group');
+                const errorMessageElement = formGroup ? formGroup.querySelector('.error-message') : null;
+
+                if (!input.value.trim() && input.type !== 'checkbox' && input.type !== 'radio') {
+                    isValid = false;
+                    formGroup?.classList.add('has-error');
+                    if (errorMessageElement) errorMessageElement.style.display = 'block';
+                } else if (input.type === 'email' && !/^[^@]+@[^@]+\.[^@]+$/.test(input.value)) {
+                     isValid = false;
+                    formGroup?.classList.add('has-error');
+                    if (errorMessageElement) errorMessageElement.style.display = 'block';
+                } else if (input.type === 'tel' && !/^07\d{8}$/.test(input.value)) {
+                    isValid = false;
+                    formGroup?.classList.add('has-error');
+                    if (errorMessageElement) errorMessageElement.style.display = 'block';
+                } else if (input.type === 'checkbox' && !input.checked) {
+                    isValid = false;
+                    formGroup?.classList.add('has-error');
+                    if (errorMessageElement) errorMessageElement.style.display = 'block';
+                } else {
+                    formGroup?.classList.remove('has-error');
+                    if (errorMessageElement) errorMessageElement.style.display = 'none';
+                }
+            });
+            // Specific password validation for signup
+            if (formId === 'signup-form') {
+                const password = document.getElementById('signup-password');
+                const confirmPassword = document.getElementById('signup-confirm-password');
+                if (password.value.length < 6) {
+                    isValid = false;
+                    password.closest('.form-group')?.classList.add('has-error');
+                    document.getElementById('error-password').style.display = 'block';
+                } else {
+                     password.closest('.form-group')?.classList.remove('has-error');
+                    document.getElementById('error-password').style.display = 'none';
+                }
+                if (password.value !== confirmPassword.value) {
+                    isValid = false;
+                    confirmPassword.closest('.form-group')?.classList.add('has-error');
+                    document.getElementById('error-confirm-password').style.display = 'block';
+                } else {
+                    confirmPassword.closest('.form-group')?.classList.remove('has-error');
+                    document.getElementById('error-confirm-password').style.display = 'none';
+                }
+            }
+             // Specific radio group validation for signup role
+            if (formId === 'signup-form') {
+                const roleRadios = form.querySelectorAll('input[name="signup-role"]');
+                let roleSelected = false;
+                roleRadios.forEach(radio => {
+                    if (radio.checked) {
+                        roleSelected = true;
+                    }
+                });
+                if (!roleSelected) {
+                    isValid = false;
+                    form.querySelector('.radio-group')?.classList.add('has-error'); // Assuming radio-group has been created for signup
+                } else {
+                    form.querySelector('.radio-group')?.classList.remove('has-error');
+                }
+            }
+
+            // Specific validation for post-task worker count
+            if (formId === 'post-task-form') {
+                const workerCountRadios = form.querySelectorAll('input[name="worker-count"]');
+                let workerCountSelected = false;
+                workerCountRadios.forEach(radio => {
+                    if (radio.checked) {
+                        workerCountSelected = true;
+                    }
+                });
+                const workerCountError = document.getElementById('error-worker-count');
+                if (!workerCountSelected) {
+                    isValid = false;
+                    if (workerCountError) workerCountError.style.display = 'block';
+                } else {
+                    if (workerCountError) workerCountError.style.display = 'none';
+                }
+            }
+            return isValid;
+        }
+
+
+        // Event Listeners
+        window.addEventListener('hashchange', handleHashChange);
+        window.addEventListener('load', () => {
+            const storedUser = localStorage.getItem('currentUser');
+            if (storedUser) {
+                state.currentUser = JSON.parse(storedUser);
+            }
+            handleHashChange();
+            updateAuthUI();
+            setupIntersectionObserver();
+        });
+
+        hamburger.addEventListener('click', () => {
+            mobileNav.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = e.currentTarget.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    e.preventDefault();
+                    navigate(href);
+                    mobileNav.classList.remove('active');
+                    hamburger.classList.remove('active');
+                }
+            });
+        });
+
+        // Signup Form Submission
+        document.getElementById('signup-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!validateForm('signup-form')) {
+                showToast('Nyamuneka uzuzuze neza buri kibazo cyose.', 'error');
+                return;
+            }
+
+            const fullname = document.getElementById('signup-fullname').value;
+            const password = document.getElementById('signup-password').value;
+            const phone = document.getElementById('signup-phone').value;
+            const role = document.querySelector('input[name="signup-role"]:checked').value;
+            const invitedBy = document.getElementById('signup-invited-by').value;
+
+            // Check if phone number already exists
+            if (state.users.some(user => user.phone === phone)) {
+                showToast('Iyi nimero ya telephone isanzwe ikoreshwa.', 'error');
+                return;
+            }
+
+            const newUser = {
+                id: generateUniqueId('USER'),
+                fullname,
+                password, // In a real app, hash this!
+                phone,
+                role,
+                invitedBy,
+                balance: 0,
+                earned: 0,
+                pending: 0,
+                tasksCompleted: 0,
+                tasksPosted: [],
+                status: 'active',
+                createdAt: new Date().toISOString()
+            };
+
+            state.users.push(newUser);
+            saveState();
+
+            // Display confirmation modal/notification
+            showConfirmationPopup();
+        });
+
+        function showConfirmationPopup() {
+            const popup = document.createElement('div');
+            popup.classList.add('auth-card', 'flex', 'flex-col', 'gap-16');
+            popup.style.position = 'fixed';
+            popup.style.top = '50%';
+            popup.style.left = '50%';
+            popup.style.transform = 'translate(-50%, -50%)';
+            popup.style.zIndex = '1000';
+            popup.style.animation = 'fadeIn 0.3s ease-out';
+            popup.innerHTML = `
+                <h3>Amakuru Y'ingenzi</h3>
+                <p>Nyamuneka reba neza ko nimero wanditse ihuye n'amazina yawe kuko ntibihindurwa.</p>
+                <p>Nyamuneka irinde gukora konti nyinshi kuko bibujijwe.</p>
+                <p>Ugize ikibazo twandikire kuri WhatsApp, Message cyangwa Telegram.</p>
+                <button class="btn btn-primary" id="confirm-signup-btn">Komeza</button>
+            `;
+            document.body.appendChild(popup);
+
+            document.getElementById('confirm-signup-btn').addEventListener('click', () => {
+                popup.remove();
+                showToast('Konti yawe yashinzwe neza! Injira.', 'success');
+                navigate('#login');
+            });
+        }
+
+
+        // Login Form Submission
+        document.getElementById('login-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!validateForm('login-form')) {
+                showToast('Nyamuneka uzuzuze neza buri kibazo cyose.', 'error');
+                return;
+            }
+
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            const user = state.users.find(u => (u.fullname === username || u.phone === username) && u.password === password);
+
+            if (user) {
+                authenticateUser(user);
+                showToast(`Murakaza neza, ${user.fullname}!`, 'success');
+            } else {
+                showToast('Amazina cyangwa ijambo banga ntibihuye.', 'error');
+            }
+        });
+
+        // Logout Button
+        if (logoutButton) {
+            logoutButton.addEventListener('click', logout);
+        }
+
+        // Dashboard Updates
+        function updateDashboard() {
+            if (state.currentUser) {
+                document.getElementById('balance-display').textContent = state.currentUser.balance.toLocaleString('rw-RW');
+                document.getElementById('earned-display').textContent = state.currentUser.earned.toLocaleString('rw-RW');
+                document.getElementById('pending-display').textContent = state.currentUser.pending.toLocaleString('rw-RW');
+                document.getElementById('available-tasks-dashboard').textContent = state.tasks.length; // Simple count for now
+                // Also update sidebar header for current user
+                document.querySelector('.sidebar-header h4').textContent = state.currentUser.fullname;
+                document.querySelector('.sidebar-header img').setAttribute('alt', state.currentUser.fullname);
+                document.querySelector('.sidebar-header img').setAttribute('src', `https://i.pravatar.cc/50?u=${state.currentUser.id}`);
+
+                if (state.currentUser.phone === ADMIN_PHONE) {
+                    adminPanelLink.style.display = 'block';
+                } else {
+                     adminPanelLink.style.display = 'none';
+                }
+            }
+        }
+        function updateSidebar() {
+             const currentHash = window.location.hash || '#dashboard';
+             document.querySelectorAll('.sidebar-nav ul li a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === currentHash) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Task Page Logic (dynamic task rendering)
+        const availableTasksContainer = document.getElementById('available-tasks');
+        const tasksTemplate = `
+            <div class="task-card animate-on-scroll">
+                <h4>{taskName}</h4>
+                <div class="task-meta">
+                    <span><i class="fas fa-clock"></i> {taskTime} Imint.</span>
+                    <span><i class="fas fa-coins"></i> {taskCredit} RF</span>
+                    <span><i class="fas fa-percent"></i> {completion}% Byarishuwe</span>
+                </div>
+                <p class="task-description multiline-ellipsis">{taskDescription}</p>
+                <div class="progress-bar">
+                    <div class="progress-bar-fill" style="width: {completion}%;"></div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary btn-small view-task-btn" data-task-id="{taskId}">Reba Kuri <i class="fas fa-arrow-right"></i></button>
+                    <button class="btn btn-outline btn-small"><i class="fas fa-star"></i> Ongeraho iby'urukundo</button>
+                </div>
+            </div>
+        `;
+
+        function renderTasks() {
+            availableTasksContainer.innerHTML = '';
+            if (state.tasks.length === 0) {
+                 availableTasksContainer.innerHTML = '<p class="text-center light-text-color">Nta Mirimo ihari ubu. Ongera ugerageze nyuma.</p>';
+                 document.getElementById('tasks-available-count').textContent = 0;
+                 document.getElementById('tasks-potential-earnings').textContent = 0;
+            } else {
+                let totalPotentialEarnings = 0;
+                state.tasks.forEach(task => { // Filter for active tasks
+                    const completionPercentage = Math.round((task.completedWorkers / task.targetWorkers) * 100) || 0;
+                    totalPotentialEarnings += task.reward;
+                    const taskHtml = tasksTemplate
+                        .replace('{taskId}', task.id)
+                        .replace('{taskName}', task.name)
+                        .replace('{taskTime}', task.timeEstimate)
+                        .replace('{taskCredit}', task.reward)
+                        .replace(/{completion}/g, completionPercentage)
+                        .replace('{taskDescription}', task.instructions.length > 120 ? task.instructions.substring(0, 117) + '...' : task.instructions);
+                    availableTasksContainer.insertAdjacentHTML('beforeend', taskHtml);
+                });
+                document.getElementById('tasks-available-count').textContent = state.tasks.length;
+                document.getElementById('tasks-potential-earnings').textContent = totalPotentialEarnings.toLocaleString('rw-RW');
+            }
+
+            // Attach event listeners dynamically
+            document.querySelectorAll('.view-task-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const taskId = e.currentTarget.dataset.taskId;
+                    const task = state.tasks.find(t => t.id === taskId);
+                    if (task) {
+                        state.currentTaskInstructions = task; // Store task for instructions page
+                        viewTaskDetails(task.name, task.link, task.instructions, task.reward + ' RF', task.category);
+                        navigate('#task-instructions');
+                    }
+                });
+            });
+        }
+
+
+        // Task Instructions page display
+        let currentImageFile = null; // Store file object for proof upload
+        function viewTaskDetails(title, link, description, credit, category) {
+            document.getElementById('instruction-task-title').textContent = title;
+            document.getElementById('instruction-task-description').textContent = description;
+            const taskLinkElement = document.getElementById('instruction-task-link');
+            taskLinkElement.href = link;
+            taskLinkElement.textContent = link;
+            document.getElementById('instruction-task-credit').textContent = credit;
+            document.getElementById('instruction-task-category').textContent = category;
+
+            // Reset proof upload section
+            document.getElementById('proof-image-preview').style.display = 'none';
+            document.getElementById('proof-image-preview').src = '';
+            document.getElementById('submit-proof-button').setAttribute('disabled', 'true');
+            currentImageFile = null;
+        }
+
+        // Proof upload functionality for task instructions
+        document.getElementById('proof-upload-box')?.addEventListener('click', () => {
+            document.getElementById('proof-screenshot-input').click();
+        });
+
+        document.getElementById('proof-screenshot-input')?.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    document.getElementById('proof-image-preview').src = event.target.result;
+                    document.getElementById('proof-image-preview').style.display = 'block';
+                    document.getElementById('submit-proof-button').removeAttribute('disabled');
+                    currentImageFile = file; // Store the file object
+                };
+                reader.readAsDataURL(file);
+            } else {
+                document.getElementById('proof-image-preview').style.display = 'none';
+                document.getElementById('proof-image-preview').src = '';
+                document.getElementById('submit-proof-button').setAttribute('disabled', 'true');
+                currentImageFile = null;
+            }
+        });
+
+        document.getElementById('submit-proof-button')?.addEventListener('click', () => {
+             if (!state.currentUser) {
+                showToast('Ukenewe kwinjira kugirango ushobore kohereza igitangaza.', 'error');
+                return;
+            }
+            if (!currentImageFile || !state.currentTaskInstructions) {
+                showToast('Nyamuneka shinga ifoto yerekana igitangaza.', 'error');
+                return;
+            }
+
+            // Simulate proof submission
+            showLoading();
+            setTimeout(() => {
+                // In a real app, upload the file to a server and save proofURL
+                const proofId = generateUniqueId('PROOF');
+                const proof = {
+                    id: proofId,
+                    taskId: state.currentTaskInstructions.id,
+                    userId: state.currentUser.id,
+                    proofImageUrl: URL.createObjectURL(currentImageFile), // For client-side display
+                    status: 'pending',
+                    submittedAt: new Date().toISOString()
+                };
+
+                // Add proof to the current task (for demonstration purposes, ideally on a server)
+                if (!state.currentTaskInstructions.proofs) {
+                    state.currentTaskInstructions.proofs = [];
+                }
+                state.currentTaskInstructions.proofs.push(proof);
+                state.currentUser.pending += state.currentTaskInstructions.reward; // Add reward to user's pending balance
+                saveState();
+                updateDashboard();
+
+                showToast('Igitangaza cyawe cyoherejwe neza! Gutegereje kwemezwa.', 'success');
+                state.currentTaskInstructions = null; // Clear current task context
+                navigate('#tasks');
+            }, 1000);
+        });
+
+        // Post Task Logic
+        const postTaskForm = document.getElementById('post-task-form');
+        const totalTaskCostDisplay = document.getElementById('total-task-cost');
+
+        function updateTaskCost() {
+            const reward = parseInt(document.getElementById('task-reward').value) || 0;
+            const selectedWorkers = document.querySelector('input[name="worker-count"]:checked');
+            const workerCount = selectedWorkers ? parseInt(selectedWorkers.value) : 0;
+            const totalCost = reward * workerCount;
+            totalTaskCostDisplay.textContent = totalCost.toLocaleString('rw-RW') + ' RF';
+        }
+
+        document.querySelectorAll('#post-task-form select').forEach(select => {
+            select.addEventListener('change', updateTaskCost);
+        });
+        document.querySelectorAll('input[name="worker-count"]').forEach(radio => {
+            radio.addEventListener('change', updateTaskCost);
+        });
+
+        document.getElementById('sample-proof-screenshot')?.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    document.getElementById('sample-proof-preview').src = event.target.result;
+                    document.getElementById('sample-proof-preview').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                document.getElementById('sample-proof-preview').style.display = 'none';
+            }
+        });
+
+        document.getElementById('task-thumbnail')?.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    document.getElementById('thumbnail-preview').src = event.target.result;
+                    document.getElementById('thumbnail-preview').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                document.getElementById('thumbnail-preview').style.display = 'none';
+            }
+        });
+
+        postTaskForm?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!validateForm('post-task-form')) {
+                showToast('Nyamuneka uzuzuze neza buri kibazo cyose.', 'error');
+                return;
+            }
+
+            const reward = parseInt(document.getElementById('task-reward').value);
+            const selectedWorkers = document.querySelector('input[name="worker-count"]:checked');
+            const workerCount = selectedWorkers ? parseInt(selectedWorkers.value) : 0;
+            const totalCost = reward * workerCount;
+
+            if (state.currentUser.balance < totalCost) {
+                showToast('Amafaranga ntahagije kuri konti yawe.', 'error');
+                return;
+            }
+
+            // Simulate file upload (replace with actual upload to server)
+            const sampleProofFile = document.getElementById('sample-proof-screenshot').files[0];
+            const thumbnailFile = document.getElementById('task-thumbnail').files[0];
+
+            showLoading();
+            setTimeout(() => {
+                const newTask = {
+                    id: generateUniqueId('TASK'),
+                    employerId: state.currentUser.id,
+                    name: document.getElementById('task-name').value,
+                    instructions: document.getElementById('task-instructions').value,
+                    link: document.getElementById('task-link').value,
+                    difficulty: document.getElementById('task-difficulty').value,
+                    category: document.getElementById('task-category').value,
+                    frequency: document.getElementById('task-frequency').value,
+                    timeEstimate: parseInt(document.getElementById('task-time-estimate').value),
+                    reward: reward,
+                    creditDuration: parseInt(document.getElementById('task-credit-duration').value),
+                    targetWorkers: workerCount,
+                    completedWorkers: 0,
+                    sampleProofUrl: sampleProofFile ? URL.createObjectURL(sampleProofFile) : 'https://via.placeholder.com/150/2b2f34/ced4da?text=SampleProof',
+                    thumbnailUrl: thumbnailFile ? URL.createObjectURL(thumbnailFile) : 'https://via.placeholder.com/100x60/2b2f34/ced4da?text=Thumbnail',
+                    status: 'active',
+                    createdAt: new Date().toISOString(),
+                    proofs: [] // Array to store proofs submitted by workers
+                };
+
+                state.tasks.push(newTask);
+                state.currentUser.balance -= totalCost; // Deduct cost from balance
+                saveState();
+                updateDashboard();
+                renderTasks(); // Re-render tasks to include new one
+                postTaskForm.reset(); // Clear the form
+                document.getElementById('sample-proof-preview').style.display = 'none';
+                document.getElementById('thumbnail-preview').style.display = 'none';
+                updateTaskCost(); // Reset cost display
+
+                showToast('Umurimo wawe watanzwe neza!', 'success');
+                navigate('#dashboard');
+            }, 1500);
+        });
+
+        // Deposit Logic
+        const depositMethodSelect = document.getElementById('deposit-method');
+        const depositAmountInput = document.getElementById('deposit-amount');
+        const mtnInfoDiv = document.getElementById('mtn-info');
+        const airtelInfoDiv = document.getElementById('airtel-info');
+        const mtnDepositAmountDisplay = document.getElementById('mtn-deposit-amount-display');
+        const ussdAmountDisplay = document.getElementById('ussd-amount-display');
+        const airtelDepositAmountDisplay = document.getElementById('airtel-deposit-amount-display');
+        const airtelUssdAmountDisplay = document.getElementById('airtel-ussd-amount-display');
+
+        depositMethodSelect?.addEventListener('change', () => {
+            mtnInfoDiv.style.display = 'none';
+            airtelInfoDiv.style.display = 'none';
+            if (depositMethodSelect.value === 'mtn') {
+                mtnInfoDiv.style.display = 'block';
+            } else if (depositMethodSelect.value === 'airtel') {
+                airtelInfoDiv.style.display = 'block';
+            }
+            updateDepositDisplay();
+        });
+
+        depositAmountInput?.addEventListener('input', updateDepositDisplay);
+
+        function updateDepositDisplay() {
+            const amount = depositAmountInput.value || 0;
+            mtnDepositAmountDisplay.textContent = amount;
+            ussdAmountDisplay.textContent = amount;
+            airtelDepositAmountDisplay.textContent = amount;
+            airtelUssdAmountDisplay.textContent = amount;
+        }
+
+        function triggerUSSD() {
+            const amount = depositAmountInput.value;
+            const phone = "0792211864"; // Receiver's number
+            if (amount && parseInt(amount) >= 500) {
+                // This will only work on a mobile device
+                window.location.href = `tel:*182*1*1*${phone}*${amount}#`;
+                showToast('USSD code yatanzwe. Nyamuneka ukomeze kuri terefone yawe.', 'info');
+            } else {
+                showToast('Nyamuneka shyiramo amafaranga nibura 500 RF.', 'error');
+            }
+        }
+
+        document.getElementById('deposit-proof-screenshot')?.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    document.getElementById('deposit-proof-preview').src = event.target.result;
+                    document.getElementById('deposit-proof-preview').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                document.getElementById('deposit-proof-preview').style.display = 'none';
+            }
+        });
+
+        document.getElementById('deposit-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!validateForm('deposit-form')) {
+                showToast('Nyamuneka uzuzuze neza buri kibazo cyose.', 'error');
+                return;
+            }
+
+            const amount = parseInt(document.getElementById('deposit-amount').value);
+            const method = document.getElementById('deposit-method').value;
+            const proofFile = document.getElementById('deposit-proof-screenshot').files[0];
+
+            if (!proofFile) {
+                document.getElementById('error-deposit-proof').style.display = 'block';
+                showToast('Ukenewe kohereza ifoto y\'igitangaza.', 'error');
+                return;
+            } else {
+                document.getElementById('error-deposit-proof').style.display = 'none';
+            }
+
+            showLoading();
+            setTimeout(() => {
+                const newDeposit = {
+                    id: generateUniqueId('DEP'),
+                    userId: state.currentUser.id,
+                    amount: amount,
+                    method: method,
+                    proofImageUrl: URL.createObjectURL(proofFile), // For client-side display
+                    status: 'pending',
+                    submittedAt: new Date().toISOString()
+                };
+                state.deposits.push(newDeposit);
+                saveState();
+                document.getElementById('deposit-form').reset();
+                document.getElementById('deposit-proof-preview').style.display = 'none';
+                mtnInfoDiv.style.display = 'none';
+                airtelInfoDiv.style.display = 'none';
+
+                showToast('Igitangaza cyawe cyo kubitsa cyoherejwe neza! Gutegereje kwemezwa.', 'success');
+                navigate('#dashboard');
+            }, 1500);
+        });
+
+        // Withdraw Logic
+        const withdrawAmountInput = document.getElementById('withdraw-amount');
+        const withdrawFinalAmountDisplay = document.getElementById('withdraw-final-amount');
+
+        // Update withdraw details based on current user
+        function updateWithdrawDisplay() {
+            if (state.currentUser) {
+                document.getElementById('withdraw-fullname').textContent = state.currentUser.fullname;
+                document.getElementById('withdraw-phone').textContent = state.currentUser.phone;
+            }
+            const amount = parseInt(withdrawAmountInput?.value) || 0;
+            const fee = amount * 0.09;
+            const finalAmount = amount - fee;
+            withdrawFinalAmountDisplay.textContent = finalAmount.toLocaleString('rw-RW') + ' RF';
+        }
+        withdrawAmountInput?.addEventListener('input', updateWithdrawDisplay);
+
+        document.getElementById('withdraw-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!validateForm('withdraw-form')) {
+                showToast('Nyamuneka uzuzuze neza buri kibazo cyose.', 'error');
+                return;
+            }
+
+            const amount = parseInt(withdrawAmountInput.value);
+            const fee = amount * 0.09;
+            const finalAmount = amount - fee;
+
+            if (!state.currentUser) {
+                showToast('Ukenewe kwinjira kugirango ubashe gukuramo amafaranga.', 'error');
+                return;
+            }
+            if (amount < 500) {
+                showToast('Amafaranga make yo gukuramo ni 500 RF.', 'error');
+                return;
+            }
+            if (state.currentUser.balance < amount) {
+                showToast('Amafaranga ntahagije kuri konti yawe kugirango ubashe gukuramo.', 'error');
+                return;
+            }
+            // In a real application, also check if total 'earned' minus 'withdrawn' exceeds this, to prevent fraud.
+            // For this demo, we'll just use current balance.
+
+            showLoading();
+            setTimeout(() => {
+                const newWithdrawal = {
+                    id: generateUniqueId('WITH'),
+                    userId: state.currentUser.id,
+                    amount: amount,
+                    fee: fee,
+                    finalAmount: finalAmount,
+                    status: 'pending',
+                    submittedAt: new Date().toISOString()
+                };
+                state.withdrawals.push(newWithdrawal);
+                state.currentUser.balance -= amount; // Deduct immediately for user's perspective, actual transfer happens on admin approval
+                saveState();
+                updateDashboard();
+                document.getElementById('withdraw-form').reset();
+                updateWithdrawDisplay();
+
+                showToast('Ibyo wasabye byoherejwe! Gutegereje kwemezwa.', 'success');
+                navigate('#dashboard');
+            }, 1500);
+        });
+
+        // Notifications Page
+        function renderNotifications() {
+            const notificationList = document.getElementById('notification-list');
+            // For now, static content. In a real app, load from user's notification array.
+            // Example structure in state.currentUser.notifications: [{message: '...', type: 'success', timestamp: '...', read: false}]
+            // Mark all as read when user visits this page
+            // Logic for dynamically rendering:
+            // notificationList.innerHTML = state.currentUser.notifications.map(n => `
+            //     <div class="notification-item ${n.read ? '' : 'unread'}">
+            //         <i class="fas fa-${n.type === 'success' ? 'check-circle' : n.type === 'error' ? 'times-circle' : 'info-circle'}"></i>
+            //         <div class="notification-content">
+            //             <p>${n.message}</p>
+            //             <small>Muri iki gihe: ${timeAgo(n.timestamp)}</small>
+            //         </div>
+            //     </div>
+            // `).join('');
+        }
+
+        // Contact Form Logic
+        document.getElementById('contact-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!validateForm('contact-form')) {
+                showToast('Nyamuneka uzuzuze neza buri kibazo cyose.', 'error');
+                return;
+            }
+
+            showLoading();
+            setTimeout(() => {
+                showToast('Ubutumwa bwawe bwoherejwe neza! Tuzaguhamagara vuba.', 'success');
+                document.getElementById('contact-form').reset();
+                hideLoading();
+            }, 1000);
+        });
+
+        // Admin Panel Logic
+        function renderAdminDeposits() {
+            const depositTableBody = document.getElementById('deposit-table-body');
+            if (!depositTableBody) return;
+            depositTableBody.innerHTML = '';
+
+            let filteredDeposits = state.deposits;
+            const searchText = document.getElementById('deposit-search')?.value.toLowerCase();
+            const statusFilter = document.getElementById('deposit-status-filter')?.value;
+
+            if (searchText) {
+                filteredDeposits = filteredDeposits.filter(d => 
+                    d.userId.toLowerCase().includes(searchText) ||
+                    d.amount.toString().includes(searchText) ||
+                    d.method.toLowerCase().includes(searchText) ||
+                    d.status.toLowerCase().includes(searchText)
+                );
+            }
+            if (statusFilter !== 'all') {
+                filteredDeposits = filteredDeposits.filter(d => d.status === statusFilter);
+            }
+
+            filteredDeposits.forEach(deposit => {
+                const user = state.users.find(u => u.id === deposit.userId);
+                const userName = user ? user.fullname : 'Ntabwo Arihaye';
+                const statusClass = deposit.status === 'pending' ? 'pending' : deposit.status === 'approved' ? 'approved' : 'rejected';
+                const row = `
+                    <tr>
+                        <td>${deposit.id}</td>
+                        <td>${userName}</td>
+                        <td>${deposit.amount.toLocaleString('rw-RW')} RF</td>
+                        <td>${deposit.method}</td>
+                        <td>${new Date(deposit.submittedAt).toLocaleString()}</td>
+                        <td><a href="${deposit.proofImageUrl}" target="_blank">Reba</a></td>
+                        <td><span class="status-badge ${statusClass}">${deposit.status}</span></td>
+                        <td class="admin-actions">
+                            <button class="btn btn-primary btn-small" data-id="${deposit.id}" data-action="approve" ${deposit.status !== 'pending' ? 'disabled' : ''}>Emeza</button>
+                            <button class="btn btn-secondary btn-small" data-id="${deposit.id}" data-action="reject" ${deposit.status !== 'pending' ? 'disabled' : ''}>Yanga</button>
+                        </td>
+                    </tr>
+                `;
+                depositTableBody.insertAdjacentHTML('beforeend', row);
+            });
+
+            // Attach event listeners for buttons
+            depositTableBody.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const depositId = e.target.dataset.id;
+                    const action = e.target.dataset.action;
+                    handleDepositAction(depositId, action);
+                });
+            });
+        }
+
+        function handleDepositAction(depositId, action) {
+             showLoading();
+            setTimeout(() => {
+                const depositIndex = state.deposits.findIndex(d => d.id === depositId);
+                if (depositIndex > -1) {
+                    const deposit = state.deposits[depositIndex];
+                    if (action === 'approve') {
+                        deposit.status = 'approved';
+                        const user = state.users.find(u => u.id === deposit.userId);
+                        if (user) {
+                            user.balance += deposit.amount;
+                            showToast(`Konto ya ${user.fullname} yashyizwemo amafaranga ${deposit.amount.toLocaleString('rw-RW')} RF.`, 'success');
+                        }
+                    } else if (action === 'reject') {
+                        deposit.status = 'rejected';
+                        showToast(`Deposit ${deposit.id} yanzwe.`, 'info');
+                    }
+                    saveState();
+                    renderAdminDeposits();
+                    updateDashboard(); // Update admin dashboard stats too
+                }
+                hideLoading();
+            }, 500);
+        }
+
+        document.getElementById('deposit-search')?.addEventListener('input', debounce(renderAdminDeposits, 300));
+        document.getElementById('deposit-status-filter')?.addEventListener('change', renderAdminDeposits);
+
+        function renderAdminUsers() {
+            const userTableBody = document.getElementById('user-table-body');
+            if (!userTableBody) return;
+            userTableBody.innerHTML = '';
+
+            let filteredUsers = state.users.filter(u => u.id !== state.currentUser.id); // Exclude admin himself
+            const searchText = document.getElementById('user-search')?.value.toLowerCase();
+            const statusFilter = document.getElementById('user-status-filter')?.value;
+
+            if (searchText) {
+                filteredUsers = filteredUsers.filter(u => 
+                    u.fullname.toLowerCase().includes(searchText) ||
+                    u.phone.includes(searchText) ||
+                    u.role.toLowerCase().includes(searchText) ||
+                    u.status.toLowerCase().includes(searchText)
+                );
+            }
+            if (statusFilter !== 'all') {
+                filteredUsers = filteredUsers.filter(u => u.status === statusFilter);
+            }
+
+            filteredUsers.forEach(user => {
+                const statusClass = user.status === 'active' ? 'active' : 'blocked';
+                const row = `
+                    <tr>
+                        <td>${user.id.slice(0, 8)}...</td>
+                        <td>${user.fullname}</td>
+                        <td>${user.phone}</td>
+                        <td>${user.balance.toLocaleString('rw-RW')} RF</td>
+                        <td>${user.role}</td>
+                        <td><span class="status-badge ${statusClass}">${user.status}</span></td>
+                        <td class="admin-actions">
+                            <button class="btn btn-${user.status === 'active' ? 'secondary' : 'primary'} btn-small" data-id="${user.id}" data-action="${user.status === 'active' ? 'block' : 'unblock'}">${user.status === 'active' ? 'Zinga' : 'Rekura'}</button>
+                            <button class="btn btn-primary btn-small" data-id="${user.id}" data-action="view-details">Genzura</button>
+                        </td>
+                    </tr>
+                `;
+                userTableBody.insertAdjacentHTML('beforeend', row);
+            });
+
+            userTableBody.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const userId = e.target.dataset.id;
+                    const action = e.target.dataset.action;
+                    handleUserAction(userId, action);
+                });
+            });
+        }
+
+        function handleUserAction(userId, action) {
+            showLoading();
+            setTimeout(() => {
+                const userIndex = state.users.findIndex(u => u.id === userId);
+                if (userIndex > -1) {
+                    const user = state.users[userIndex];
+                    if (action === 'block') {
+                        user.status = 'blocked';
+                        showToast(`${user.fullname} yatsinze kuzinga.`, 'info');
+                    } else if (action === 'unblock') {
+                        user.status = 'active';
+                        showToast(`${user.fullname} yatsinze kurekura.`, 'success');
+                    } else if (action === 'view-details') {
+                        // Implement view user details logic, maybe open a modal or navigate to a user profile page
+                        alert(`Viewing details for user: ${user.fullname}\nBalance: ${user.balance}\nRole: ${user.role}`);
+                        showToast('Genzura amakuru y\'umukoresha.', 'info');
+                    }
+                    saveState();
+                    renderAdminUsers();
+                }
+                hideLoading();
+            }, 500);
+        }
+        document.getElementById('user-search')?.addEventListener('input', debounce(renderAdminUsers, 300));
+        document.getElementById('user-status-filter')?.addEventListener('change', renderAdminUsers);
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        function setupIntersectionObserver() {
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        // Optional: Unobserve after animation if it only happens once
+                        // observer.unobserve(entry.target);
+                    } else {
+                        // Optional: Remove in-view class if you want animation to repeat on scroll out/in
+                        entry.target.classList.remove('in-view');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.animate-on-scroll').forEach(element => {
+                observer.observe(element);
+            });
+        }
+
+        // Initial setup calls
+        renderTasks();
+    </script>
+</body>
+</html>
